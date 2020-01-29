@@ -39,7 +39,6 @@ ActiveRecord::Schema.define(version: 2020_01_29_110519) do
     t.string "text"
     t.string "author"
     t.string "location"
-    t.string "timestamp"
     t.bigint "pad_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -50,7 +49,7 @@ ActiveRecord::Schema.define(version: 2020_01_29_110519) do
     t.string "name"
     t.string "description"
     t.string "project_code"
-    t.string "open"
+    t.boolean "open"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
