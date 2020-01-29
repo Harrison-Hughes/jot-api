@@ -5,8 +5,4 @@ class Project < ApplicationRecord
 
   validates :name, :description , presence: true
 
-  def createProjectWithUserId(name:, description:, open:, id:)
-
-  end
-
 end

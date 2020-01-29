@@ -1,6 +1,18 @@
 class ProjectsController < ApplicationController
 
+
   before_action :protected_action
+
+  def index
+    projects = Project.all.select { |p| p.users.include?(@current_user)}
+    if !projects.empty?
+      render json: projects
+    end
+  end
+
+  def show
+    
+  end
 
   def newProject
     project = Project.new(project_params)
