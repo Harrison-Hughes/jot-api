@@ -10,7 +10,7 @@ class PadsController < ApplicationController
     pad = Pad.new(pad_params)
     if pad.save
       serialized_data = ActiveModelSerializers::Adapter::Json.new(
-        ConversationSerializer.new(pad)
+        PadSerializer.new(pad)
       ).serializable_hash
       ActionCable.server.broadcast 'pads_channel', serialized_data
       head :ok

@@ -4,9 +4,14 @@ class PointsController < ApplicationController
 
   def newPoint
     point = Point.new(point_params)
+    pad = Pad.find(point_params[:pad_id])
     if point.save
       point.update(author: @current_user.user_code)
-      render json: point
+      serialized_data = ActiveModelSerializers::Adapter::Json.new(
+        PointSerializer.new(point)
+      ).serializable_hash
+      PointsChannel.broadcast_to pad, serialized_data
+      head :ok
     else 
       render json: { error: user.errors.full_messages }, status: 403
     end
