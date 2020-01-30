@@ -1,6 +1,5 @@
 class ProjectsController < ApplicationController
 
-
   before_action :protected_action
 
   def index
@@ -11,7 +10,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    
+    render json: Project.find(params[:id]).to_json(:include => :pads)
   end
 
   def newProject

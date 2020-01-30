@@ -3,8 +3,12 @@ Rails.application.routes.draw do
 
   get '/myProjects', to: 'projects#index'
   post '/newProject', to: 'projects#newProject'
+  get '/projects/:id', to: 'projects#show'
 
-  # get `/myProjects/:id`, to: 'projects#show'
+  post '/newPad', to: 'pads#newPad'
+  get '/pads/:id', to: 'pads#show'
+
+  post '/newPoint', to: 'points#newPoint'
 
   post '/signin', to: 'users#signin'
   post '/signup', to: 'users#signup'
