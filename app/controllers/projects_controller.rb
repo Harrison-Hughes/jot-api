@@ -24,6 +24,11 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def showProjectCollaborators
+    collaborations = Project.find_by(project_code: params[:id]).collaborations
+    render json: renderCollabs(collaborations)
+  end
+
   private
 
   def protected_action
@@ -38,6 +43,10 @@ class ProjectsController < ApplicationController
 
   def generateProjectCode(id)
     id
+  end
+
+  def renderCollabs(collaborations)
+    collaborations.map{ |collab| {user_code: collab.user.user_code, nickname: collab.nickname}}
   end
 
 end

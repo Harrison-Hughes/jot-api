@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/myProjects', to: 'projects#index'
   post '/newProject', to: 'projects#newProject'
   get '/projects/:id', to: 'projects#show'
+  get '/showCollaborators/:id', to: 'projects#showProjectCollaborators'
 
   post '/newPad', to: 'pads#newPad'
   get '/pads/:id', to: 'pads#show'
