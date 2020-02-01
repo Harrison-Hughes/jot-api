@@ -8,11 +8,12 @@ class PadsController < ApplicationController
 
   def newPad
     pad = Pad.new(pad_params)
+    project = Project.find_by(id: pad_params[:project_id])
     if pad.save
       serialized_data = ActiveModelSerializers::Adapter::Json.new(
         PadSerializer.new(pad)
       ).serializable_hash
-      ActionCable.server.broadcast 'pads_channel', serialized_data
+      PadsChannel.broadcast_to project, serialized_data
       head :ok
     else 
       render json: { error: user.errors.full_messages }, status: 403

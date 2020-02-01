@@ -1,6 +1,7 @@
 class PadsChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "pads_channel_#{params[:id]}"
+    project = Project.find(params[:project])
+    stream_for project
   end
 
   def unsubscribed
