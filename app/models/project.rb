@@ -3,6 +3,6 @@ class Project < ApplicationRecord
   has_many :users, through: :collaborations
   has_many :pads, dependent: :destroy
 
-  validates :name, :description , presence: true
+  validates :name, :description, presence: true
 
 end

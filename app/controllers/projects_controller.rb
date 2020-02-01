@@ -10,7 +10,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    render json: Project.find(params[:id]).to_json(:include => :pads)
+    render json: Project.find_by(project_code: params[:id]).to_json(:include => :pads)
   end
 
   def newProject
