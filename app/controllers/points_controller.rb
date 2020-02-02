@@ -6,7 +6,6 @@ class PointsController < ApplicationController
     point = Point.new(point_params)
     pad = Pad.find(point_params[:pad_id])
     if point.save
-      point.update(author: @current_user.user_code)
       serialized_data = ActiveModelSerializers::Adapter::Json.new(
         PointSerializer.new(point)
       ).serializable_hash
@@ -26,7 +25,7 @@ class PointsController < ApplicationController
   end
 
   def point_params
-    params.require(:point).permit(:text, :location, :pad_id)
+    params.require(:point).permit(:text, :location, :author, :pad_id)
   end
 
 end

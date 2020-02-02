@@ -3,7 +3,8 @@ class PadsController < ApplicationController
   before_action :protected_action
 
   def show
-    render json: Pad.find(params[:id]).to_json(:include => :points)
+    pad = Pad.find_by(pad_code: params[:pad_code])
+    render json: pad.to_json(:include => [:points])
   end
 
   def newPad
@@ -21,7 +22,15 @@ class PadsController < ApplicationController
     end
   end
 
+  # def getCollaborators
+  #   pad = Pad.find_by(pad_code: params[:pad_code])
+  # end
+
   private
+
+  # def findPadCollaboratorIDs(pad)
+  #   collabarations = pad.project.collaborations.map{ |collab| collab.user_id}
+  # end
 
   def protected_action
     if !logged_in?
