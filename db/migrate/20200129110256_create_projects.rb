@@ -4,7 +4,7 @@ class CreateProjects < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :description
       t.string :project_code
-      t.string :open
+      t.boolean :open
 
       t.timestamps
     end

@@ -3,6 +3,7 @@ class CreatePads < ActiveRecord::Migration[6.0]
     create_table :pads do |t|
       t.string :name
       t.string :description
+      t.string :pad_code
       t.references :project, null: false, foreign_key: true
 
       t.timestamps
