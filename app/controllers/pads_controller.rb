@@ -10,6 +10,7 @@ class PadsController < ApplicationController
     pad = Pad.new(pad_params)
     project = Project.find_by(id: pad_params[:project_id])
     if pad.save
+      pad.update(pad_code: generatePadCode(pad.id))
       serialized_data = ActiveModelSerializers::Adapter::Json.new(
         PadSerializer.new(pad)
       ).serializable_hash
@@ -26,6 +27,10 @@ class PadsController < ApplicationController
     if !logged_in?
         render json: { errors: 'you must be logged in'}, status: :unauthorized
     end
+  end
+
+  def generatePadCode(id)
+    id
   end
 
   def pad_params

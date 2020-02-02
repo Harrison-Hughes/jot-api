@@ -28,9 +28,9 @@ collaborations = Collaboration.create([
 ])
 
 pads = Pad.create([
-  {name: "lec01", description: "what is economics", project_id: projects[0].id},
-  {name: "lec02", description: "what are numbers", project_id: projects[0].id},
-  {name: "respiration", description: "how things breath", project_id: projects[1].id}
+  {name: "lec01", pad_code: "1", description: "what is economics", project_id: projects[0].id},
+  {name: "lec02", pad_code: "2", description: "what are numbers", project_id: projects[0].id},
+  {name: "respiration", pad_code: "3", description: "how things breath", project_id: projects[1].id}
 ])
 
 points = Point.create([

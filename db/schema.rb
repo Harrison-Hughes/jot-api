@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2020_01_29_110519) do
   create_table "pads", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.string "pad_code"
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
