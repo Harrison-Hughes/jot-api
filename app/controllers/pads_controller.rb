@@ -22,6 +22,11 @@ class PadsController < ApplicationController
     end
   end
 
+  def delete
+    pad = Pad.find_by(pad_code: params[:pad_code])
+    pad.destroy
+  end
+
   # def getCollaborators
   #   pad = Pad.find_by(pad_code: params[:pad_code])
   # end

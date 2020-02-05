@@ -17,7 +17,7 @@ class ProjectsController < ApplicationController
     project = Project.new(project_params)
     if project.save
       project.update(project_code: generateProjectCode(project.id))
-      Collaboration.create(user: @current_user, project: project, access: 'admin', nickname: 'nickname')
+      Collaboration.create(user: @current_user, project: project, access: 'admin', nickname: 'admin')
       render json: project
     else 
       render json: { error: user.errors.full_messages }, status: 403
