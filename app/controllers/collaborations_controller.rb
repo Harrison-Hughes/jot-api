@@ -9,11 +9,15 @@ class CollaborationsController < ApplicationController
   def joinProject
     user = User.find_by(user_code: collaboration_params[:user_code])
     project = Project.find_by(project_code: collaboration_params[:project_code])
-    collaboration = Collaboration.new(user: user, project: project, access: collaboration_params[:access], nickname: collaboration_params[:nickname])
-    if collaboration.save
-      render json: collaboration
-    else 
-      render json: { error: user.errors.full_messages }, status: 403
+    if Collaboration.where(user: user, project: project).length > 1
+      render json: "collaboration already exists"
+    else
+      collaboration = Collaboration.new(user: user, project: project, access: collaboration_params[:access], nickname: collaboration_params[:nickname])
+      if collaboration.save
+        render json: collaboration
+      else 
+        render json: { error: user.errors.full_messages }, status: 403
+      end
     end
   end
 

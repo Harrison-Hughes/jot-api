@@ -19,12 +19,12 @@ projects = Project.create([
 ])
 
 collaborations = Collaboration.create([
-  {user: users[0], project: projects[0], access: 'admin', nickname: 'nickname'},
-  {user: users[1], project: projects[0], access: 'admin', nickname: 'nickname'},
-  {user: users[2], project: projects[0], access: 'admin', nickname: 'nickname'},
-  {user: users[3], project: projects[0], access: 'admin', nickname: 'nickname'},
-  {user: users[0], project: projects[1], access: 'admin', nickname: 'nickname'},
-  {user: users[1], project: projects[1], access: 'admin', nickname: 'nickname'}
+  {user: users[0], project: projects[0], access: 'admin', nickname: 'jeff'},
+  {user: users[1], project: projects[0], access: 'admin', nickname: 'suzan'},
+  {user: users[2], project: projects[0], access: 'admin', nickname: 'pontiac'},
+  {user: users[3], project: projects[0], access: 'admin', nickname: 'wendingo'},
+  {user: users[0], project: projects[1], access: 'admin', nickname: 'jeff'},
+  {user: users[1], project: projects[1], access: 'admin', nickname: 'suzan'}
 ])
 
 pads = Pad.create([

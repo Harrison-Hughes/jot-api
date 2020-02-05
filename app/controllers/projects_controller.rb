@@ -9,15 +9,24 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def myProjects
+    user = User.find_by(user_code: params[:user_code])
+    projects = Project.all.select { |p| p.users.include?(user)}
+    if !projects.empty?
+      render json: projects
+    end
+  end
+
   def show
     render json: Project.find_by(project_code: params[:project_code]).to_json(:include => :pads)
   end
 
   def newProject
-    project = Project.new(project_params)
+    user = User.find_by(user_code: project_params[:user_code])
+    project = Project.new(name: project_params[:name], description: project_params[:description], open: project_params[:open])
     if project.save
       project.update(project_code: generateProjectCode(project.id))
-      Collaboration.create(user: @current_user, project: project, access: 'admin', nickname: 'admin')
+      Collaboration.create(user: user, project: project, access: 'admin', nickname: 'admin')
       render json: project
     else 
       render json: { error: user.errors.full_messages }, status: 403
@@ -38,7 +47,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :description, :open)
+    params.require(:project).permit(:user_code, :name, :description, :open)
   end
 
   def generateProjectCode(id)

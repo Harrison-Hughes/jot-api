@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-  get '/myProjects', to: 'projects#index'
+  # get '/myProjects', to: 'projects#index'
+  get '/myProjects/:user_code', to: 'projects#myProjects'
   post '/newProject', to: 'projects#newProject'
   get '/projects/:project_code', to: 'projects#show'
   get '/showCollaborators/:id', to: 'projects#showProjectCollaborators'
