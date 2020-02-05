@@ -1,3 +1,3 @@
 class CollaborationSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :created_at, :nickname, :access
 end

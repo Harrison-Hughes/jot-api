@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   post '/newPad', to: 'pads#newPad'
   get '/pads/:pad_code', to: 'pads#show'
 
+  get '/getCollaboration/:user_id/:project_id', to: 'collaborations#show'
+
   post '/newPoint', to: 'points#newPoint'
 
   post '/signin', to: 'users#signin'
