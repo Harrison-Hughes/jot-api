@@ -7,15 +7,16 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 users = User.create([
-  {email: "jeff@google.com", user_code: "1", password: "jeff", password_confirmation: "jeff"},
-  {email: "suzan@gmail.com", user_code: "2", password: "suzan", password_confirmation: "suzan"},
-  {email: "pontiac@cedartree.com", user_code: "3", password: "pontiac", password_confirmation: "pontiac"},
-  {email: "wendingo@gmail.com", user_code: "4", password: "wendingo", password_confirmation: "wendingo"}
+  {email: "jeff@google.com", user_code: 'jeffjeff', password: "jeff", password_confirmation: "jeff", default_nickname: "jeff"},
+  {email: "suzan@gmail.com", user_code: 'suzansuz', password: "suzan", password_confirmation: "suzan", default_nickname: "suzan"},
+  {email: "pontiac@cedartree.com", user_code: 'pontiacp', password: "pontiac", password_confirmation: "pontiac", default_nickname: "pontiac"},
+  {email: "wendingo@gmail.com", user_code: 'wendingo', password: "wendingo", password_confirmation: "wendingo", default_nickname: "wendingo"}
 ])
 
 projects = Project.create([
-  {name: "econ 101", project_code: "1", description: "economics class 2019", open: true},
-  {name: "bio project", project_code: "2", description: "biology project 2020", open: true},
+  {name: "econ 101", project_code: "econ 101", description: "economics class 2019", open: true, default_access: 'admin'},
+  {name: "bio project", project_code: "bio proj", description: "biology project 2020", open: true, default_access: 'admin'},
+  {name: "secret project", project_code: "secret p", description: "top secret things to say", open: false, default_access: 'admin'}
 ])
 
 collaborations = Collaboration.create([
@@ -24,13 +25,15 @@ collaborations = Collaboration.create([
   {user: users[2], project: projects[0], access: 'admin', nickname: 'pontiac'},
   {user: users[3], project: projects[0], access: 'admin', nickname: 'wendingo'},
   {user: users[0], project: projects[1], access: 'admin', nickname: 'jeff'},
-  {user: users[1], project: projects[1], access: 'admin', nickname: 'suzan'}
+  {user: users[1], project: projects[1], access: 'admin', nickname: 'suzan'},
+  {user: users[0], project: projects[2], access: 'admin', nickname: 'jeff'},
+  {user: users[1], project: projects[2], access: 'admin', nickname: 'suzan'}
 ])
 
 pads = Pad.create([
-  {name: "lec01", pad_code: "1", description: "what is economics", project_id: projects[0].id},
-  {name: "lec02", pad_code: "2", description: "what are numbers", project_id: projects[0].id},
-  {name: "respiration", pad_code: "3", description: "how things breath", project_id: projects[1].id}
+  {name: "lec01", pad_code: "lec01lec", description: "what is economics", project_id: projects[0].id},
+  {name: "lec02", pad_code: "lec02lec", description: "what are numbers", project_id: projects[0].id},
+  {name: "respiration", pad_code: "respirat", description: "how things breath", project_id: projects[1].id}
 ])
 
 points = Point.create([

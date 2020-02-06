@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
     user = User.find_by(user_code: project_params[:user_code])
     project = Project.new(name: project_params[:name], description: project_params[:description], open: project_params[:open])
     if project.save
-      project.update(project_code: generateProjectCode(project.id))
+      project.update(project_code: generateProjectCode)
       Collaboration.create(user: user, project: project, access: 'admin', nickname: 'admin')
       render json: project
     else 
@@ -38,6 +38,11 @@ class ProjectsController < ApplicationController
     render json: renderCollabs(collaborations)
   end
 
+  def destroyProject 
+    project = Project.find_by(project_code: params[:project_code])
+
+  end
+
   private
 
   def protected_action
@@ -47,11 +52,17 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:user_code, :name, :description, :open)
+    params.require(:project).permit(:user_code, :name, :description, :open, :default_access)
   end
 
-  def generateProjectCode(id)
-    id
+  def generateProjectCode
+    project_codes = Project.all.map{ |p| p.project_code}
+    searching = true
+    while searching
+      code = SecureRandom.hex(4)
+      searching = project_codes.include? code
+    end
+    return code
   end
 
   def renderCollabs(collaborations)

@@ -11,10 +11,10 @@ class UsersController < ApplicationController
 
   def signup
     if user_params[:password] == user_params[:password_confirmation]
-
-      user = User.new(email: user_params[:email], password: user_params[:password])
+      default_nickname = user_params[:email].split("@")[0]
+      user = User.new(email: user_params[:email], password: user_params[:password], default_nickname: default_nickname)
       if user.save
-        user.update(user_code: generateUserCode(user.id))
+        user.update(user_code: generateUserCode)
         render json: user
       else
         render json: { error: user.errors.full_messages }, status: 403
@@ -39,8 +39,14 @@ class UsersController < ApplicationController
       params.require(:user).permit(:email, :password, :password_confirmation)
   end 
 
-  def generateUserCode(id)
-    id
+  def generateUserCode
+    user_codes = User.all.map{ |p| p.user_code}
+    searching = true
+    while searching
+      code = SecureRandom.hex(4)
+      searching = user_codes.include? code
+    end
+    return code
   end
 
 end
