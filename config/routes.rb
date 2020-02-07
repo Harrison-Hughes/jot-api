@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get '/myInvitations/:user_code', to: 'invitations#myInvitations'
   post '/sendInvitation', to: 'invitations#sendInvitation'
+  delete '/declineInvitation/:invitation_id', to: 'invitations#declineInvitation'
 
   post '/newPad', to: 'pads#newPad'
   get '/pads/:pad_code', to: 'pads#show'

@@ -7,16 +7,16 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 users = User.create([
-  {email: "jeff@google.com", user_code: 'jeffjeff', password: "jeff", password_confirmation: "jeff", default_nickname: "jeff"},
-  {email: "suzan@gmail.com", user_code: 'suzansuz', password: "suzan", password_confirmation: "suzan", default_nickname: "suzan"},
-  {email: "pontiac@cedartree.com", user_code: 'pontiacp', password: "pontiac", password_confirmation: "pontiac", default_nickname: "pontiac"},
-  {email: "wendingo@gmail.com", user_code: 'wendingo', password: "wendingo", password_confirmation: "wendingo", default_nickname: "wendingo"}
+  {email: "jeff@google.com", user_code: 'jeffje', password: "jeff", password_confirmation: "jeff", default_nickname: "jeff"},
+  {email: "suzan@gmail.com", user_code: 'suzans', password: "suzan", password_confirmation: "suzan", default_nickname: "suzan"},
+  {email: "pontiac@cedartree.com", user_code: 'pontia', password: "pontiac", password_confirmation: "pontiac", default_nickname: "pontiac"},
+  {email: "wendingo@gmail.com", user_code: 'wendin', password: "wendingo", password_confirmation: "wendingo", default_nickname: "wendingo"}
 ])
 
 projects = Project.create([
-  {name: "econ 101", project_code: "econ 101", description: "economics class 2019", open: true, default_access: 'admin'},
-  {name: "bio project", project_code: "bio proj", description: "biology project 2020", open: true, default_access: 'admin'},
-  {name: "secret project", project_code: "secret p", description: "top secret things to say", open: false, default_access: 'admin'}
+  {name: "econ 101", project_code: "econ 1", description: "economics class 2019", open: true, default_access: 'admin'},
+  {name: "bio project", project_code: "bio pr", description: "biology project 2020", open: true, default_access: 'read only'},
+  {name: "secret project", project_code: "secret", description: "top secret things to say", open: false, default_access: 'admin'}
 ])
 
 collaborations = Collaboration.create([
@@ -31,9 +31,9 @@ collaborations = Collaboration.create([
 ])
 
 pads = Pad.create([
-  {name: "lec01", pad_code: "lec01lec", description: "what is economics", project_id: projects[0].id},
-  {name: "lec02", pad_code: "lec02lec", description: "what are numbers", project_id: projects[0].id},
-  {name: "respiration", pad_code: "respirat", description: "how things breath", project_id: projects[1].id}
+  {name: "lec01", pad_code: "lec01l", description: "what is economics", project_id: projects[0].id},
+  {name: "lec02", pad_code: "lec02l", description: "what are numbers", project_id: projects[0].id},
+  {name: "respiration", pad_code: "respir", description: "how things breath", project_id: projects[1].id}
 ])
 
 points = Point.create([

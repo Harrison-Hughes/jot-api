@@ -10,9 +10,9 @@ class CollaborationsController < ApplicationController
     user = User.find_by(user_code: collaboration_params[:user_code])
     project = Project.find_by(project_code: collaboration_params[:project_code])
     if Collaboration.where(user: user, project: project).length > 1
-      render json: "collaboration already exists"
+      render json: { error: "collaboration already exists"}
     elsif !project.open
-      render json: { error: "project is closed" }, status: 403
+      render json: { error: "project is closed" }
     else
       collaboration = Collaboration.new(user: user, project: project, access: project[:default_access], nickname: collaboration_params[:nickname])
       if collaboration.save
@@ -28,7 +28,7 @@ class CollaborationsController < ApplicationController
     user = User.find_by(id: invitation[:user_id])
     project = Project.find_by(project_code: invitation[:project_code])
     if Collaboration.where(user: user, project: project).length > 1
-      render json: { error: "collaboration already exists" }, status: 403
+      render json: { error: "collaboration already exists" }
     else
       collaboration = Collaboration.new(user: user, project: project, access: project[:default_access], nickname: collaboration_params[:nickname])
       if collaboration.save

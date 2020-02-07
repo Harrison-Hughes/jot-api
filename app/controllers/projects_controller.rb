@@ -14,6 +14,7 @@ class ProjectsController < ApplicationController
     projects = Project.all.select { |p| p.users.include?(user)}
     if !projects.empty?
       render json: projects
+    else render json: { error: "you have no projects" }, status: 204
     end
   end
 
@@ -23,13 +24,13 @@ class ProjectsController < ApplicationController
 
   def newProject
     user = User.find_by(user_code: project_params[:user_code])
-    project = Project.new(name: project_params[:name], description: project_params[:description], open: project_params[:open])
+    project = Project.new(name: project_params[:name], description: project_params[:description], open: project_params[:open], default_access: project_params[:default_access])
     if project.save
       project.update(project_code: generateProjectCode)
-      Collaboration.create(user: user, project: project, access: 'admin', nickname: 'admin')
+      Collaboration.create(user: user, project: project, access: 'admin', nickname: user.default_nickname)
       render json: project
     else 
-      render json: { error: user.errors.full_messages }, status: 403
+      render json: { error: "could not create project" }, status: 403
     end
   end
 
@@ -59,7 +60,7 @@ class ProjectsController < ApplicationController
     project_codes = Project.all.map{ |p| p.project_code}
     searching = true
     while searching
-      code = SecureRandom.hex(4)
+      code = SecureRandom.hex(3)
       searching = project_codes.include? code
     end
     return code

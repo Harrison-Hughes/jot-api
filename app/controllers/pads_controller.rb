@@ -39,7 +39,7 @@ class PadsController < ApplicationController
     pad_codes = Pad.all.map{ |p| p.pad_code}
     searching = true
     while searching
-      code = SecureRandom.hex(4)
+      code = SecureRandom.hex(3)
       searching = pad_codes.include? code
     end
     return code
