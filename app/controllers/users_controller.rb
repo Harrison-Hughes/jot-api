@@ -33,11 +33,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def updateDefaultNickname
+    user = User.find_by(id: params[:user_id])
+    user.update_attribute(:default_nickname, user_params[:default_nickname])
+    render json: user
+  end
+
   private
 
   def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation)
-  end 
+      params.require(:user).permit(:email, :password, :password_confirmation, :default_nickname)
+  end
 
   def generateUserCode
     user_codes = User.all.map{ |p| p.user_code}

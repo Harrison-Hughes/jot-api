@@ -40,6 +40,13 @@ class CollaborationsController < ApplicationController
     invitation.destroy
   end
 
+  def delete
+    user = User.find_by(id: params[:user_id])
+    project = Project.find_by(id: params[:project_id])
+    collaboration = Collaboration.where(user: user, project: project)[0]
+    collaboration.destroy
+  end
+
   private
 
   # def joinClosedProject

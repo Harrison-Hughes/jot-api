@@ -16,6 +16,11 @@ class PointsController < ApplicationController
     end
   end
 
+  def delete
+    point = Point.find_by(id: params[:point_id])
+    point.destroy
+  end
+
   private
 
   def protected_action

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/projects/:project_code', to: 'projects#show'
   get '/showCollaborators/:id', to: 'projects#showProjectCollaborators'
   delete '/deleteProject/:project_code', to: 'projects#delete'
+  patch '/updateProject/:project_code', to: 'projects#update'
 
   get '/myInvitations/:user_code', to: 'invitations#myInvitations'
   post '/sendInvitation', to: 'invitations#sendInvitation'
@@ -18,12 +19,15 @@ Rails.application.routes.draw do
   get '/getCollaboration/:user_id/:project_id', to: 'collaborations#show'
   post '/joinProjectIfOpen', to: 'collaborations#joinProjectIfOpen'
   post '/acceptInvitation', to: 'collaborations#acceptInvitation'
+  delete '/leaveProject/:user_id/:project_id', to: 'collaborations#delete'
 
   post '/newPoint', to: 'points#newPoint'
+  delete '/deletePoint/:point_id', to: 'points#delete'
 
   post '/signin', to: 'users#signin'
   post '/signup', to: 'users#signup'
   get '/validate', to: 'users#validate'
+  patch '/updateDefaultNickname/:user_id', to: 'users#updateDefaultNickname'
 
   mount ActionCable.server => '/cable'
 end

@@ -39,9 +39,15 @@ class ProjectsController < ApplicationController
     render json: renderCollabs(collaborations)
   end
 
-  def destroyProject 
+  def delete 
     project = Project.find_by(project_code: params[:project_code])
+    project.destroy
+  end
 
+  def update
+    project = Project.find_by(project_code: params[:project_code])
+    project.update(project_params)
+    render json: project
   end
 
   private
