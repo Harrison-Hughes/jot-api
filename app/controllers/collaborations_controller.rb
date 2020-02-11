@@ -3,7 +3,9 @@ class CollaborationsController < ApplicationController
   before_action :protected_action
 
   def show
-    render json: Collaboration.where(user_id: params[:user_id], project_id: params[:project_id])
+    user = User.find_by(user_code: params[:user_code]);
+    project = Project.find_by(project_code: params[:project_code])
+    render json: Collaboration.where(user: user, project: project)
   end
 
   def joinProjectIfOpen
@@ -40,11 +42,34 @@ class CollaborationsController < ApplicationController
     invitation.destroy
   end
 
-  def delete
+  def leaveProject
     user = User.find_by(id: params[:user_id])
     project = Project.find_by(id: params[:project_id])
     collaboration = Collaboration.where(user: user, project: project)[0]
     collaboration.destroy
+  end
+
+  def removeOther
+    user = User.find_by(user_code: params[:user_code])
+    project = Project.find_by(project_code: params[:project_code])
+    collaboration = Collaboration.where(user: user, project: project)[0]
+    collaboration.destroy
+  end
+
+  def updateCollaborationAccess
+    user = User.find_by(user_code: params[:user_code])
+    project = Project.find_by(project_code: params[:project_code])
+    collaboration = Collaboration.where(user: user, project: project)[0]
+    collaboration.update(access: collaboration_params[:access])
+    render json: collaboration
+  end
+
+  def updateCollaborationNickname
+    user = User.find_by(user_code: params[:user_code])
+    project = Project.find_by(project_code: params[:project_code])
+    collaboration = Collaboration.where(user: user, project: project)[0]
+    collaboration.update(nickname: collaboration_params[:nickname])
+    render json: collaboration
   end
 
   private

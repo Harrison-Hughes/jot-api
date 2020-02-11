@@ -27,6 +27,12 @@ class PadsController < ApplicationController
     pad.destroy
   end
 
+  def edit
+    pad = Pad.find_by(pad_code: params[:pad_code])
+    pad.update(name: pad_params[:name], description: pad_params[:description])
+    render json: pad
+  end
+
   private
 
   def protected_action

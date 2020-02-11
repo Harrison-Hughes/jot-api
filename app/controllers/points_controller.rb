@@ -3,8 +3,13 @@ class PointsController < ApplicationController
   before_action :protected_action
 
   def newPoint
-    point = Point.new(point_params)
     pad = Pad.find(point_params[:pad_id])
+    loc = point_params[:location]
+    if loc == "temp"
+      currPoints = pad.points.length
+      loc = pad.points.length
+    end
+    point = Point.new(text: point_params[:text], author: point_params[:author], location: loc, pad: pad)
     if point.save
       serialized_data = ActiveModelSerializers::Adapter::Json.new(
         PointSerializer.new(point)
@@ -16,9 +21,20 @@ class PointsController < ApplicationController
     end
   end
 
+  def editPoint
+    point = Point.find_by(id: params[:point_id])
+    pad = point.pad
+    if point.update(text: point_params[:text])
+      PointsChannel.broadcast_to pad, json: { action: 'update', id: point.id, text: point_params[:text]}
+    end
+  end
+
   def delete
     point = Point.find_by(id: params[:point_id])
-    point.destroy
+    pad = point.pad
+    if point.destroy
+      PointsChannel.broadcast_to pad, json: { action: 'delete', id: point.id }
+    end
   end
 
   private

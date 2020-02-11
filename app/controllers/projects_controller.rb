@@ -35,7 +35,7 @@ class ProjectsController < ApplicationController
   end
 
   def showProjectCollaborators
-    collaborations = Project.find_by(project_code: params[:id]).collaborations
+    collaborations = Project.find_by(project_code: params[:project_code]).collaborations
     render json: renderCollabs(collaborations)
   end
 
@@ -73,7 +73,7 @@ class ProjectsController < ApplicationController
   end
 
   def renderCollabs(collaborations)
-    collaborations.map{ |collab| {user_code: collab.user.user_code, nickname: collab.nickname}}
+    collaborations.map{ |collab| {user_code: collab.user.user_code, nickname: collab.nickname, access: collab.access}}
   end
 
 end
