@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_29_110519) do
+ActiveRecord::Schema.define(version: 2020_02_05_163157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 2020_01_29_110519) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["project_id"], name: "index_collaborations_on_project_id"
     t.index ["user_id"], name: "index_collaborations_on_user_id"
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.string "project_code"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_invitations_on_user_id"
   end
 
   create_table "pads", force: :cascade do |t|
@@ -50,6 +58,7 @@ ActiveRecord::Schema.define(version: 2020_01_29_110519) do
     t.string "name"
     t.string "description"
     t.string "project_code"
+    t.string "default_access"
     t.boolean "open"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -59,12 +68,14 @@ ActiveRecord::Schema.define(version: 2020_01_29_110519) do
     t.string "email"
     t.string "password_digest"
     t.string "user_code"
+    t.string "default_nickname"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "collaborations", "projects"
   add_foreign_key "collaborations", "users"
+  add_foreign_key "invitations", "users"
   add_foreign_key "pads", "projects"
   add_foreign_key "points", "pads"
 end

@@ -11,7 +11,7 @@ class PadsController < ApplicationController
     pad = Pad.new(pad_params)
     project = Project.find_by(id: pad_params[:project_id])
     if pad.save
-      pad.update(pad_code: generatePadCode(pad.id))
+      pad.update(pad_code: generatePadCode)
       serialized_data = ActiveModelSerializers::Adapter::Json.new(
         PadSerializer.new(pad)
       ).serializable_hash
@@ -22,15 +22,18 @@ class PadsController < ApplicationController
     end
   end
 
-  # def getCollaborators
-  #   pad = Pad.find_by(pad_code: params[:pad_code])
-  # end
+  def delete
+    pad = Pad.find_by(pad_code: params[:pad_code])
+    pad.destroy
+  end
+
+  def edit
+    pad = Pad.find_by(pad_code: params[:pad_code])
+    pad.update(name: pad_params[:name], description: pad_params[:description])
+    render json: pad
+  end
 
   private
-
-  # def findPadCollaboratorIDs(pad)
-  #   collabarations = pad.project.collaborations.map{ |collab| collab.user_id}
-  # end
 
   def protected_action
     if !logged_in?
@@ -38,8 +41,14 @@ class PadsController < ApplicationController
     end
   end
 
-  def generatePadCode(id)
-    id
+  def generatePadCode
+    pad_codes = Pad.all.map{ |p| p.pad_code}
+    searching = true
+    while searching
+      code = SecureRandom.hex(3)
+      searching = pad_codes.include? code
+    end
+    return code
   end
 
   def pad_params
