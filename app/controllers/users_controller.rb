@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     if user and user.authenticate(user_params[:password])
       render json: user
     else
-      render json: { error: "email/password combo invalid." }, status: 401
+      render json: { error: 'email/password combo invalid' }, status: :not_acceptable
     end
   end
 
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     if logged_in?
       render json: @current_user
     else
-      render json: {message:'validation failed'}, status: 418
+      render json: {error:'validation failed'}, status: 418
     end
   end
 

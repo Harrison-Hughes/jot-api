@@ -3,13 +3,15 @@ class CollaborationsController < ApplicationController
   before_action :protected_action
 
   def show
-    user = User.find_by(user_code: params[:user_code]);
+    # user = User.find_by(user_code: params[:user_code]);
+    user = @current_user
     project = Project.find_by(project_code: params[:project_code])
     render json: Collaboration.where(user: user, project: project)
   end
 
   def joinProjectIfOpen
-    user = User.find_by(user_code: collaboration_params[:user_code])
+    # user = User.find_by(user_code: collaboration_params[:user_code])
+    user = @current_user
     project = Project.find_by(project_code: collaboration_params[:project_code])
     if Collaboration.where(user: user, project: project).length > 1
       render json: { error: "collaboration already exists"}
@@ -27,7 +29,8 @@ class CollaborationsController < ApplicationController
 
   def acceptInvitation
     invitation = Invitation.find_by(id: collaboration_params[:invitation_id])
-    user = User.find_by(id: invitation[:user_id])
+    # user = User.find_by(id: invitation[:user_id])
+    user = @current_user
     project = Project.find_by(project_code: invitation[:project_code])
     if Collaboration.where(user: user, project: project).length > 1
       render json: { error: "collaboration already exists" }
@@ -43,7 +46,8 @@ class CollaborationsController < ApplicationController
   end
 
   def leaveProject
-    user = User.find_by(id: params[:user_id])
+    # user = User.find_by(id: params[:user_id])
+    user = @current_user
     project = Project.find_by(id: params[:project_id])
     collaboration = Collaboration.where(user: user, project: project)[0]
     collaboration.destroy

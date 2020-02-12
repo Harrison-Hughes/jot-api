@@ -5,6 +5,10 @@ class PadsChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
+    puts <<-EOF
+    
+    I'm a closed socket! Pads
+    
+    EOF
   end
 end
