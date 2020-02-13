@@ -10,20 +10,22 @@ class CollaborationsController < ApplicationController
   end
 
   def joinProjectIfOpen
-    # user = User.find_by(user_code: collaboration_params[:user_code])
-    user = @current_user
-    project = Project.find_by(project_code: collaboration_params[:project_code])
-    if Collaboration.where(user: user, project: project).length > 1
-      render json: { error: "collaboration already exists"}
-    elsif !project.open
-      render json: { error: "project is closed" }
-    else
-      collaboration = Collaboration.new(user: user, project: project, access: project[:default_access], nickname: collaboration_params[:nickname])
-      if collaboration.save
-        render json: collaboration
-      else 
-        render json: { error: user.errors.full_messages }, status: 403
+    user = User.find_by(user_code: collaboration_params[:user_code])
+    # user = @current_user
+    if project = Project.find_by(project_code: collaboration_params[:project_code])
+      if Collaboration.where(user: user, project: project).length > 0
+        render json: { error: "collaboration already exists"}
+      elsif !project.open
+        render json: { error: "project is closed" }
+      else
+        collaboration = Collaboration.new(user: user, project: project, access: project[:default_access], nickname: collaboration_params[:nickname])
+        if collaboration.save
+          render json: collaboration
+        else 
+          render json: { error: user.errors.full_messages }, status: 403
+        end
       end
+    else render json: { error: "project not found" }
     end
   end
 
@@ -46,8 +48,8 @@ class CollaborationsController < ApplicationController
   end
 
   def leaveProject
-    # user = User.find_by(id: params[:user_id])
-    user = @current_user
+    user = User.find_by(id: params[:user_id])
+    # user = @current_user
     project = Project.find_by(id: params[:project_id])
     collaboration = Collaboration.where(user: user, project: project)[0]
     collaboration.destroy

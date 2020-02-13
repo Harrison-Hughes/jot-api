@@ -6,8 +6,8 @@ class PointsController < ApplicationController
     pad = Pad.find(point_params[:pad_id])
     loc = point_params[:location]
     if loc == "temp"
-      currPoints = pad.points.length
-      loc = pad.points.length
+      pointLocations = pad.points.map{ |p| p.location.to_i}
+      loc = pointLocations.max + 1
     end
     point = Point.new(text: point_params[:text], author: point_params[:author], location: loc, pad: pad)
     if point.save

@@ -46,8 +46,10 @@ class ProjectsController < ApplicationController
 
   def update
     project = Project.find_by(project_code: params[:project_code])
-    project.update(project_params)
-    render json: project
+    if project.update(project_params)
+      render json: project
+    else render json: {error: 'could not update project'}, status: 418
+    end
   end
 
   private

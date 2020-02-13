@@ -24,13 +24,19 @@ class PadsController < ApplicationController
 
   def delete
     pad = Pad.find_by(pad_code: params[:pad_code])
-    pad.destroy
+    project = pad.project
+    if pad.destroy
+      PadsChannel.broadcast_to project, { action: 'delete', id: pad.id }
+    end
   end
 
   def edit
     pad = Pad.find_by(pad_code: params[:pad_code])
-    pad.update(name: pad_params[:name], description: pad_params[:description])
-    render json: pad
+    project = pad.project
+    if pad.update(name: pad_params[:name], description: pad_params[:description])
+      PadsChannel.broadcast_to project, json: { action: 'update', id: pad.id, name: pad_params[:name], description: pad_params[:description]}
+    end
+    # render json: pad
   end
 
   private
