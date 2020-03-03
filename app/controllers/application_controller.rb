@@ -17,8 +17,13 @@ class ApplicationController < ActionController::API
     def set_current_user
       token = get_token
       if token
-        decoded_token = decode_token(token)
-        @current_user = User.find(decoded_token["user_id"])
+        begin
+          decoded_token = decode_token(token)
+          @current_user = User.find(decoded_token["user_id"])
+        rescue JWT::DecodeError
+          render json: { error: 'token error' }, status: :not_acceptable
+          @current_user = nil
+        end
       else 
         @current_user = nil
       end
